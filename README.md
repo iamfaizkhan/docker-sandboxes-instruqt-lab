@@ -3,6 +3,7 @@
 A 35-minute hands-on [Instruqt](https://instruqt.com) lab that shows IT admins, security and DevOps teams how [Docker Sandboxes](https://docs.docker.com/ai/sandboxes/) contains AI coding agents.
 
 **▶ Play the lab:** https://play.instruqt.com/valencecloud/invite/zgm2ydlvvqgs
+
 No sign-up, Docker experience, AI subscription or API key needed.
 
 ## What learners do
