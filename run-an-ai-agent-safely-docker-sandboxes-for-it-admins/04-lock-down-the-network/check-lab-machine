@@ -1,0 +1,24 @@
+#!/bin/bash
+# Check: Locked Down is active, github.com is allowed, and a blocked request was logged.
+
+rules=$(sbx policy ls --wide --type network)
+
+# 1. Locked Down: Balanced's Docker Hub rule should be gone.
+if echo "$rules" | grep "docker.io" > /dev/null; then
+  fail-message "You're still on Balanced. In the Admin tab, run: sbx policy reset, then choose 3 (Locked Down)."
+  exit 1
+fi
+
+# 2. An allow rule for github.com must exist.
+if ! echo "$rules" | grep "github.com" > /dev/null; then
+  fail-message "No rule for github.com yet. In the Admin tab, run: sbx policy allow network github.com"
+  exit 1
+fi
+
+# 3. The log must show at least one blocked request, proving the learner saw a block.
+if ! sbx policy log | grep "No matching allow rule" > /dev/null; then
+  fail-message "No blocked request in the log yet. In the Sandbox tab, run curl -I https://example.com and see it blocked."
+  exit 1
+fi
+
+exit 0

@@ -1,0 +1,6 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Solve: stop and remove the sandbox without asking for confirmation.
+sbx stop my-sandbox || true
+sbx rm --force my-sandbox

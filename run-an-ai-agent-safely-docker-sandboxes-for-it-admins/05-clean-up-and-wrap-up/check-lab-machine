@@ -1,0 +1,14 @@
+#!/bin/bash
+# Check: my-sandbox is removed, and the project folder still exists.
+
+if sbx ls | grep "my-sandbox" > /dev/null; then
+  fail-message "my-sandbox still exists. In the Admin tab, run: sbx stop my-sandbox, then sbx rm my-sandbox"
+  exit 1
+fi
+
+if [ ! -d /root/project ]; then
+  fail-message "The /root/project folder is missing. Removing a sandbox doesn't delete it, so check whether it was deleted by hand, then recreate it with: mkdir -p /root/project"
+  exit 1
+fi
+
+exit 0

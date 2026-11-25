@@ -1,0 +1,10 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Create a "confidential" folder on the lab machine, outside the project.
+mkdir -p /root/customer-exports
+printf 'customer_id,name,email\n1001,Sample Customer,sample@example.com\n' > /root/customer-exports/customers.csv
+
+# Start a container on the lab machine's own Docker Engine.
+docker rm -f billing-app 2>/dev/null || true
+docker run -d --name billing-app alpine sleep 3600

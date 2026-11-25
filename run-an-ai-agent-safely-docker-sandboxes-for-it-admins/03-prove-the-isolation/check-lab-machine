@@ -1,0 +1,24 @@
+#!/bin/bash
+# Check: is agent-app running inside the sandbox, and invisible on the lab machine?
+
+# 1. The sandbox must be running.
+if ! sbx ls | grep "my-sandbox" | grep "running" > /dev/null; then
+  fail-message "my-sandbox isn't running. Reconnect with: sbx run --name my-sandbox"
+  exit 1
+fi
+
+# 2. agent-app must be running inside the sandbox's own Docker.
+inside=$(sbx exec my-sandbox -- docker ps --format '{{.Names}}')
+if ! echo "$inside" | grep -x "agent-app" > /dev/null; then
+  fail-message "No container called agent-app inside the sandbox yet. In the Sandbox tab, run: docker run -d --name agent-app alpine sleep 3600"
+  exit 1
+fi
+
+# 3. agent-app must NOT appear on the lab machine's Docker.
+outside=$(docker ps --format '{{.Names}}')
+if echo "$outside" | grep -x "agent-app" > /dev/null; then
+  fail-message "agent-app is also running on the lab machine. Remove it in the Admin tab with: docker rm -f agent-app. Agent containers belong inside the sandbox."
+  exit 1
+fi
+
+exit 0

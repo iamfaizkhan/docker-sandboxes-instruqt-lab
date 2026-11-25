@@ -1,0 +1,10 @@
+version: "3"
+virtualmachines:
+- name: lab-machine
+  image: ubuntu-os-cloud/ubuntu-2404-noble-amd64-v20241004
+  memory: 8192
+  cpus: 2
+  shell: /bin/bash
+  nested_virtualization: true
+secrets:
+- name: DOCKER_PAT

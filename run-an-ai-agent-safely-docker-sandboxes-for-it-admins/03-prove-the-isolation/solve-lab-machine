@@ -1,0 +1,5 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Solve: start agent-app inside the sandbox from the outside.
+sbx exec my-sandbox -- docker run -d --name agent-app alpine sleep 3600

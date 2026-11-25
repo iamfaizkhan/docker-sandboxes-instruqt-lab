@@ -1,0 +1,18 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Solve: start my-sandbox the way a learner would, but in the background,
+# so Instruqt can test this challenge without a person at the keyboard.
+cd /root/project
+nohup sbx run --name my-sandbox shell . -- -c "sleep 3600" > /tmp/solve-sbx.log 2>&1 &
+
+# Wait up to 3 minutes for sbx ls to show my-sandbox as running.
+for i in $(seq 1 90); do
+  if sbx ls | grep "my-sandbox" | grep "running" > /dev/null; then
+    exit 0
+  fi
+  sleep 2
+done
+
+echo "my-sandbox did not start in time"
+exit 1

@@ -1,0 +1,22 @@
+#!/bin/bash
+set -euxo pipefail
+
+# Solve: switch to Locked Down, trigger one blocked request, then allow github.com.
+# UNTESTED: confirm in Phase 5 how "sbx policy reset" behaves with no keyboard attached.
+sbx policy reset --force --no-input || true
+sbx policy init deny-all
+
+# The reset stopped the sandbox. Start it again in the background.
+cd /root/project
+nohup sbx run --name my-sandbox -- -c "sleep 3600" > /tmp/solve-sbx.log 2>&1 &
+for i in $(seq 1 90); do
+  if sbx ls | grep "my-sandbox" | grep "running" > /dev/null; then
+    break
+  fi
+  sleep 2
+done
+
+# One blocked request, so it appears in the log.
+sbx exec my-sandbox -- curl -s -o /dev/null https://github.com || true
+
+sbx policy allow network github.com

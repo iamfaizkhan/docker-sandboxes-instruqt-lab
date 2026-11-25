@@ -1,0 +1,38 @@
+slug: run-an-ai-agent-safely-docker-sandboxes-for-it-admins
+id: oy8tddxlalsy
+title: 'Run an AI agent safely: Docker Sandboxes for IT admins'
+teaser: Contain AI coding agents in isolated microVMs, then control what they can
+  see and reach.
+description: |-
+  AI coding agents can read files, install software and run commands on their own. This lab shows IT admins, security and DevOps teams how Docker Sandboxes contains them.
+
+  **You will:**
+
+  - Launch an AI agent sandbox with the `sbx` CLI
+  - Prove that it can't see the host's files or containers
+  - Lock down its network access, then allow a single destination
+  - Review the audit log of blocked and allowed requests
+  - Stop and remove the sandbox
+
+  **Who it's for:** IT admins, security and DevOps teams. No Docker experience is needed.
+
+  **Time:** about 35 minutes. No AI subscription or API key is needed.
+icon: https://storage.googleapis.com/instruqt-frontend/img/tracks/default.png
+tags:
+- ai-agents
+- sandboxes
+- security
+- docker
+owner: valencecloud
+developers:
+- faizkhan@valencecloud.com
+idle_timeout: 900
+timelimit: 2700
+lab_config:
+  sidebar_enabled: true
+  feedback_recap_enabled: true
+  feedback_tab_enabled: false
+  loadingMessages: true
+  hideStopButton: false
+checksum: "1082060198307659067"
+enhanced_loading: false

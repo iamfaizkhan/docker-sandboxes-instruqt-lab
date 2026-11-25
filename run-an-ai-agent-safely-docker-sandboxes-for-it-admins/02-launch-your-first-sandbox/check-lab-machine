@@ -1,0 +1,20 @@
+#!/bin/bash
+# Check: does a sandbox called my-sandbox exist, and is it running?
+
+# Ask sbx for the list of sandboxes and keep only the my-sandbox row.
+row=$(sbx ls | grep "my-sandbox")
+
+# If that row is empty, the sandbox doesn't exist yet.
+if [ -z "$row" ]; then
+  fail-message "No sandbox called my-sandbox yet. In the Sandbox tab, run: sbx run --name my-sandbox shell ."
+  exit 1
+fi
+
+# If the row doesn't say "running", it exists but is switched off.
+if ! echo "$row" | grep -q "running"; then
+  fail-message "my-sandbox exists but isn't running. Reconnect with: sbx run --name my-sandbox"
+  exit 1
+fi
+
+# Both tests passed.
+exit 0
